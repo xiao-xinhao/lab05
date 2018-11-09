@@ -43,8 +43,11 @@ main:
     
     add     $a1, $0, $s1
     add     $a0, $0, $s0
+	
 
     jal     PrintReverse
+	li $v0,1
+	syscall
 
     add     $s1, $s1, $s2
     add     $s1, $s1, $s3
@@ -55,6 +58,9 @@ main:
 
     add     $a1, $0, $s1
     add     $a0, $0, $s0
+	
+	
+	
     jal     DispArray
 
     j       Exit
@@ -119,29 +125,20 @@ PrintReverse:
 
 	#base-case checking
 	
-	slt $t0, $a1, $zero
+	li $t0, 1
+	slt $t0, $a1, $t0
 	
-	li $a0,2
-	li $v0,1
-	syscall
-	
-	jr $ra
-	bne $t0, $zero, basecase
+	bne $t0, $zero, bc
 
 	
 	#$t0 is the length of the array
-	move $t0, $a1
+	move $t8, $a1
+	addi $t8,$t8,-1
+	move $t9, $a0	
 	
-	move $s1,$a0	
 	
-	li $t1,2
-	mult $t0, $t1
-	mtlo $t1
-
-	li $t2, 0
-	
-	sll $t3, $t2, $t1
-	add $t4, $t3, $a0
+	sll $t3, $t8, 2
+	add $t4, $t3, $t9
 	lw $t5, 0($t4)
 	
 	
@@ -149,14 +146,22 @@ PrintReverse:
 	move $a0, $t5
 	syscall
 	
+	jal ConventionCheck
+	
+	
+	
 	#reset $a0 to the address of array
 	
-	move $a0,$s1
-	addi $a1,$a1,-1
+	move $a0,$t9
+	move $a1,$t8
+	
 	jal PrintReverse
 	
 	
 		
-basecase:	
+bc:	
     # Do not remove this line
-    jr      $ra
+	li $a0,1
+	li $v0,1
+	syscall
+    jr   $ra
