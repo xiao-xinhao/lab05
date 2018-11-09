@@ -122,6 +122,14 @@ Exit:
 
 IterativeMax:
     #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
+	
+	addu $sp,$sp,-20
+	sw $s0,0($sp)
+	sw $s1,4($sp)
+	sw $s2,8($sp)
+	sw $s3,12($sp)
+	sw $ra,16($sp)
+	
 	li $s1, 0
 	move $s0, $a1
 	move $s3,$a0
@@ -180,16 +188,17 @@ continue:
 	lw $ra, 0($sp)
     addi $sp, $sp, 4
 	
-	
-	
-	
+
 	
 	add $s1,$s1,1
 	j loop
 
 end:
-	li $s2,0
-	la $s0, myArray
-	li $s3, 0
+	lw $ra,16($sp)
+	lw $s3,12($sp)
+	lw $s2,8($sp)
+	lw $s1,4($sp)
+	lw $s0,0($sp)
+	addu $sp,$sp,20
 	jr $ra
 
