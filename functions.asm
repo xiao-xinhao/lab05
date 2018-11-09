@@ -46,8 +46,7 @@ main:
 	
 
     jal     PrintReverse
-	li $v0,1
-	syscall
+	
 
     add     $s1, $s1, $s2
     add     $s1, $s1, $s3
@@ -161,4 +160,5 @@ PrintReverse:
 		
 bc:	
     # Do not remove this line
+	
     jr   $ra
