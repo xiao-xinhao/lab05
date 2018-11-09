@@ -124,9 +124,10 @@ IterativeMax:
     #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
 	li $s1, 0
 	move $s0, $a1
+	move $s3,$a0
 	
 	sll $t1, $s1, 2
-	add $t2,$a0, $t1
+	add $t2,$s3, $t1
 	lw $t3, 0($t2)
 	
 	
@@ -140,7 +141,7 @@ loop:
 	beq $s1,$s0,end
 	
 	sll $t1, $s1, 2
-	add $t2, $a0, $t1
+	add $t2, $s3, $t1
 	lw $t3,0($t2)
 	
 	
@@ -181,7 +182,6 @@ continue:
 	
 	
 	
-	la $a0, myArray
 	
 	
 	add $s1,$s1,1
@@ -190,5 +190,6 @@ continue:
 end:
 	li $s2,0
 	la $s0, myArray
+	li $s3, 0
 	jr $ra
 
