@@ -161,7 +161,4 @@ PrintReverse:
 		
 bc:	
     # Do not remove this line
-	li $a0,1
-	li $v0,1
-	syscall
     jr   $ra
