@@ -118,6 +118,12 @@ Exit:
 
 PrintReverse:
 	#TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
+	
+	addi $sp, $sp, -12
+	sw $s0,0($sp)
+	sw $s1,4($sp)
+    sw $ra, 8($sp)
+	
 
 	#base-case checking
 	
@@ -128,13 +134,13 @@ PrintReverse:
 
 	
 	#$t0 is the length of the array
-	move $t8, $a1
-	addi $t8,$t8,-1
-	move $t9, $a0	
+	move $s0, $a1
+	addi $s0,$s0,-1
+	move $s1, $a0	
 	
 	
-	sll $t3, $t8, 2
-	add $t4, $t3, $t9
+	sll $t3, $s0, 2
+	add $t4, $t3, $s1
 	lw $t5, 0($t4)
 	
 	
@@ -143,8 +149,7 @@ PrintReverse:
 	move $a0, $t5
 	syscall
 	
-	addi $sp, $sp, -4
-    sw $ra, 0($sp)
+	
 	
 	jal ConventionCheck
 	
@@ -153,17 +158,18 @@ PrintReverse:
 	#reset $a0 to the address of array
 	
 	
-	move $a0,$t9
+	move $a0,$s1
 	
-	move $a1,$t8
+	move $a1,$s0
 	
 	jal PrintReverse
 	
 		
 endF:	
     # Do not remove this line
-	
-	lw $ra, 0($sp)
-    addi $sp, $sp, 4
+	lw $s1, 4($sp)
+	lw $s0, 0($sp)
+	lw $ra, 8($sp)
+    addi $sp, $sp, 12
     jr $ra
 	
