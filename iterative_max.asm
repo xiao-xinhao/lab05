@@ -18,8 +18,7 @@ convention:
 myArray:
 	.word 0 33 123 -66 332 -1 -223 453 9 45 -78 -14  
 	
-maximum:
-	.space 0
+
 
 #Text Area (i.e. instructions)
 .text
@@ -34,6 +33,8 @@ main:
 
     add     $a1, $0, $s1
     add     $a0, $0, $s0
+	
+	
  
     jal     DispArray
 
@@ -48,6 +49,8 @@ main:
     add     $a0, $0, $s0
 
     jal     IterativeMax
+	
+	
 
     add     $s1, $s1, $s2
     add     $s1, $s1, $s3
@@ -119,33 +122,37 @@ Exit:
 
 IterativeMax:
     #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
-	li $t8, 0
-	move $t9, $a1
+	li $s1, 0
+	move $s0, $a1
 	
-	sll $t1, $t8, 2
+	sll $t1, $s1, 2
 	add $t2,$a0, $t1
 	lw $t3, 0($t2)
 	
-	sw $t3, maximum
+	
+	
+	#maximum
+	move $s2, $t3
 	
 	
 loop:
-	beq $t8,$t9,end
 	
-	sll $t1, $t8, 2
+	beq $s1,$s0,end
+	
+	sll $t1, $s1, 2
 	add $t2, $a0, $t1
 	lw $t3,0($t2)
 	
 	
 	
 	
-	lw $t1, maximum
+	move $t1, $s2
 	slt $t4, $t3, $t1
 	beq $t4, $zero, change
 	
 	j continue
 change:
-	sw $t3 , maximum
+	move $s2, $t3
 continue:
 	
 	li $v0, 1
@@ -159,7 +166,7 @@ continue:
 	syscall
 	
 	li $v0, 1
-	lw $a0, maximum
+	move $a0, $s2
 	syscall
 	
 	
@@ -174,17 +181,14 @@ continue:
 	
 	
 	
-	
-	
-	
-	move $a1, $t9
 	la $a0, myArray
 	
 	
-	add $t8,$t8,1
+	add $s1,$s1,1
 	j loop
 
 end:
-	
+	li $s2,0
+	la $s0, myArray
 	jr $ra
 
