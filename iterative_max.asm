@@ -180,13 +180,11 @@ continue:
 	
 	
 
-	addi $sp, $sp, -4
-    sw $ra, 0($sp)
+	
 
 	jal ConventionCheck
 	
-	lw $ra, 0($sp)
-    addi $sp, $sp, 4
+	
 	
 
 	
