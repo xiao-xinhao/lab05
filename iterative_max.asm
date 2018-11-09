@@ -17,6 +17,9 @@ convention:
 
 myArray:
 	.word 0 33 123 -66 332 -1 -223 453 9 45 -78 -14  
+	
+maximum:
+	.space 0
 
 #Text Area (i.e. instructions)
 .text
@@ -116,6 +119,72 @@ Exit:
 
 IterativeMax:
     #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
+	li $t8, 0
+	move $t9, $a1
+	
+	sll $t1, $t8, 2
+	add $t2,$a0, $t1
+	lw $t3, 0($t2)
+	
+	sw $t3, maximum
+	
+	
+loop:
+	beq $t8,$t9,end
+	
+	sll $t1, $t8, 2
+	add $t2, $a0, $t1
+	lw $t3,0($t2)
+	
+	
+	
+	
+	lw $t1, maximum
+	slt $t4, $t3, $t1
+	beq $t4, $zero, change
+	
+	j continue
+change:
+	sw $t3 , maximum
+continue:
+	
+	li $v0, 1
+	move $a0, $t3
+	syscall
 
-    # Do not remove this line
-    jr      $ra
+	
+	
+	li $v0, 4
+	la $a0, newline
+	syscall
+	
+	li $v0, 1
+	lw $a0, maximum
+	syscall
+	
+	
+
+	addi $sp, $sp, -4
+    sw $ra, 0($sp)
+
+	jal ConventionCheck
+	
+	lw $ra, 0($sp)
+    addi $sp, $sp, 4
+	
+	
+	
+	
+	
+	
+	move $a1, $t9
+	la $a0, myArray
+	
+	
+	add $t8,$t8,1
+	j loop
+
+end:
+	
+	jr $ra
+
