@@ -44,7 +44,7 @@ main:
     add     $a1, $0, $s1
     add     $a0, $0, $s0
 	
-
+	
     jal     PrintReverse
 	
 
@@ -57,9 +57,6 @@ main:
 
     add     $a1, $0, $s1
     add     $a0, $0, $s0
-	
-	
-	
     jal     DispArray
 
     j       Exit
@@ -127,7 +124,7 @@ PrintReverse:
 	li $t0, 1
 	slt $t0, $a1, $t0
 	
-	bne $t0, $zero, bc
+	bne $t0, $zero, endF
 
 	
 	#$t0 is the length of the array
@@ -141,9 +138,13 @@ PrintReverse:
 	lw $t5, 0($t4)
 	
 	
+	
 	li $v0, 1
 	move $a0, $t5
 	syscall
+	
+	addi $sp, $sp, -4
+    sw $ra, 0($sp)
 	
 	jal ConventionCheck
 	
@@ -151,14 +152,18 @@ PrintReverse:
 	
 	#reset $a0 to the address of array
 	
+	
 	move $a0,$t9
+	
 	move $a1,$t8
 	
 	jal PrintReverse
 	
-	
 		
-bc:	
+endF:	
     # Do not remove this line
 	
-    jr   $ra
+	lw $ra, 0($sp)
+    addi $sp, $sp, 4
+    jr $ra
+	
