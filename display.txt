@@ -1,0 +1,65 @@
+
+#display.txt
+
+Step2: There are four states, therefore 2 flip-flops needed.
+Step3:Truth tables
+
+	
+Current States(q0,q1) | Next States (q0*,q1*)| output (in order A B C D E F G)
+   00                 |      01              |   1 1 0 1 1 0 1
+   01                 |      10              |   0 1 1 0 0 1 1
+   10                 |      11              |   1 1 1 1 1 1 1
+   11                 |      00              |   0 1 1 0 0 0 0
+   
+   
+Steps 4: K-Map for output
+For A:  A = !q1
+   0 1   q1
+0  1
+1  1
+q0 
+
+For B: B = 1
+   0 1   q1
+0  1 1
+1  1 1
+q0 
+
+For C: C = q0 + q1
+   0 1   q1
+0    1
+1  1 1
+q0 
+
+For D: D = !q1
+   0 1   q1
+0  1  
+1  1 
+q0 
+
+For E: E = !q1
+   0 1   q1
+0  1  
+1  1 
+q0 
+
+For F: F = !q0q1 + q0!q1
+   0 1   q1
+0    1 
+1  1 
+q0 
+
+For G: G = !q1 + !q0
+   0 1   q1
+0  1 1
+1  1 
+q0 
+
+
+Step 5: q1* = !q1
+   0 1   q1
+0  1 
+1  1 
+q0 
+
+
